@@ -1,0 +1,6 @@
+Lamp.code-workspace
+php/src/*
+.vs/*
+
+!php/src/index.php
+!php/src/test.php
