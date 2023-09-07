@@ -1,16 +1,21 @@
 version: '3.8'
 services:
-    php-apache-environment:
+    web:
         container_name: php-apache
         build:
             context: ./php
             dockerfile: Dockerfile
+        restart: unless-stopped
         depends_on:
             - db
         volumes:
             - ./php/src:/var/www/html/
         ports:
-            - 8000:80
+            - 80:80
+        networks:
+          - mysql_network
+        # networks:
+        #   - mynetwork
     db:
         container_name: db
         # image: mysql
@@ -19,28 +24,38 @@ services:
             dockerfile: Dockerfile
         volumes:
             - ./mysql/config:/etc/mysql/conf.d/source
-        restart: always
+            - db:/var/lib/mysql
+        restart: unless-stopped
         environment:
-            MYSQL_ROOT_PASSWORD: MYSQL_ROOT_PASSWORD
+            MYSQL_ROOT_PASSWORD: mysql@123
             MYSQL_DATABASE: MYSQL_DATABASE
-            MYSQL_USER: MYSQL_USER
-            MYSQL_PASSWORD: MYSQL_PASSWORD
+            MYSQL_USER: mysql_user
+            MYSQL_PASSWORD: er$$786op
         ports:
-            - "9906:3306"
+            - "3306:3306"
+        networks:
+            - mysql_network
         # networks:
-        #   - mysqlnet
+        #   - mynetwork
         #   - mysqlnetfpm
-    phpmyadmin:
-      image: phpmyadmin/phpmyadmin
-      ports:
-          - '8080:80'
-      restart: always
-      environment:
-          PMA_HOST: db
-      depends_on:
-          - db
+    # phpmyadmin:
+    #   image: phpmyadmin/phpmyadmin
+    #   ports:
+    #       - '81:80'
+    #   restart: always
+    #   environment:
+    #       PMA_HOST: db
+    #   depends_on:
+    #       - db
+volumes:
+    db:
 networks:
-  mysqlnet:
-    driver: bridge
-  mysqlnetfpm:
-    driver: bridge
+ mysql_network:        
+    name: mynetwork
+    external: true           
+# networks:
+#     mynetwork
+#   mysqlnet:
+#     driver: bridge
+#   mysqlnetfpm:
+#     driver: bridge
