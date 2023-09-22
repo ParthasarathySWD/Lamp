@@ -54,6 +54,12 @@ RUN pecl install imagick \
 # APT install pdftk
 RUN apt-get -y install pdftk
 
+# APT install qpdf
+RUN apt-get -y install qpdf
+
+# APT install poppler-utils
+RUN apt-get -y install poppler-utils
+
 
 # install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
