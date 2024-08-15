@@ -12,6 +12,7 @@ EXPOSE 3306
 
 # Copy starting scripts file
 COPY start.sh /root/start.sh
+COPY ./config/entrypoint.sh /entrypoint.sh
 
 # Run necessary services
 CMD ["/bin/bash", "/root/start.sh"]
