@@ -6,4 +6,7 @@ mysql/logs/*
 
 !php/src/index.php
 !php/src/test.php
-postgres
+postgres/data/*
+postgres/logs/*
+!postgres/data/postgresql.conf
+!postgres/data/pg_hba.conf
