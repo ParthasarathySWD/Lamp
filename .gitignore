@@ -1,5 +1,7 @@
 Lamp.code-workspace
 php/src/*
+mysql/data/*
+mysql/logs/*
 .vs/*
 
 !php/src/index.php

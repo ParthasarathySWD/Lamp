@@ -14,21 +14,16 @@ services:
             - 80:80
         networks:
           - mysql_network
-        # networks:
-        #   - mynetwork
     db:
         container_name: db
-        # image: mysql
-        build:
-            context: ./mysql
-            dockerfile: Dockerfile
+        image: mysql:8.0.20  # Use a compatible MySQL version
         volumes:
             - ./mysql/config:/etc/mysql/conf.d/source
-            - db:/var/lib/mysql
+            - ./mysql/data:/var/lib/mysql
             - ./mysql/scripts:/docker-entrypoint-initdb.d
         restart: unless-stopped
         environment:
-            MYSQL_ROOT_PASSWORD: mysql@123
+            MYSQL_ROOT_PASSWORD: "mysql@123"
             MYSQL_DATABASE: MYSQL_DATABASE
             MYSQL_USER: mysql_user
             MYSQL_PASSWORD: er$$786op
@@ -36,9 +31,6 @@ services:
             - "3306:3306"
         networks:
             - mysql_network
-        # networks:
-        #   - mynetwork
-        #   - mysqlnetfpm
     postgres:
         container_name: postgres
         build:
@@ -47,31 +39,16 @@ services:
         environment:
             POSTGRES_USER: root
             POSTGRES_PASSWORD: postgres@123
-            POSTGRES_DB: postgres
+            POSTGRES_DB: postgres_db  # Change to match Dockerfile
         ports:
         - "5432:5432"
         volumes:
             - ./postgres/data:/var/lib/postgresql/data
         networks:
-            - mysql_network            
-    # phpmyadmin:
-    #   image: phpmyadmin/phpmyadmin
-    #   ports:
-    #       - '81:80'
-    #   restart: always
-    #   environment:
-    #       PMA_HOST: db
-    #   depends_on:
-    #       - db
+            - mysql_network
 volumes:
     db:
 networks:
- mysql_network:        
-    name: mynetwork
-    external: true           
-# networks:
-#     mynetwork
-#   mysqlnet:
-#     driver: bridge
-#   mysqlnetfpm:
-#     driver: bridge
+    mysql_network:
+        name: mynetwork
+        external: true

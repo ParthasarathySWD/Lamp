@@ -3,10 +3,10 @@ LABEL Name=db Version=8.0.28 Description="Mysql server for dev environment"
 # VOLUME ${PWD}/config-file.cnf /etc/mysql/conf.d
 
 
-ENV MYSQL_ROOT_PASSWORD MYSQL_ROOT_PASSWORD
-ENV MYSQL_DATABASE MYSQL_DATABASE
-ENV MYSQL_USER MYSQL_USER
-ENV MYSQL_PASSWORD MYSQL_PASSWORD
+ENV MYSQL_ROOT_PASSWORD=root_password
+ENV MYSQL_DATABASE=database_name
+ENV MYSQL_USER=user_name
+ENV MYSQL_PASSWORD=user_password
 
 EXPOSE 3306
 

@@ -29,7 +29,7 @@ file_env() {
 	local var="$1"
 	local fileVar="${var}_FILE"
 	local def="${2:-}"
-	if [ "${!var:-}" ] && [ "${!fileVar:-}" ]; then
+	if [ -n "${!var:-}" ] && [ -n "${!fileVar:-}" ]; then
 		mysql_error "Both $var and $fileVar are set (but are exclusive)"
 	fi
 	local val="$def"
